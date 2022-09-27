@@ -1,0 +1,8 @@
+../Core/Src/display_DOGS102.c:52:13:spi_msg_out	32	static
+../Core/Src/display_DOGS102.c:93:6:display_init	40	static
+../Core/Src/display_DOGS102.c:122:6:display_blank	40	static
+../Core/Src/display_DOGS102.c:138:6:display_checkerboard	48	static
+../Core/Src/display_DOGS102.c:164:6:display_snake_board	56	static
+../Core/Src/display_DOGS102.c:189:13:display_paint_square	40	static
+../Core/Src/display_DOGS102.c:206:6:display_white_square	24	static
+../Core/Src/display_DOGS102.c:211:6:display_dark_square	16	static

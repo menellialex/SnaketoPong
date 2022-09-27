@@ -1,0 +1,9 @@
+../Core/Src/snake_gameplay.c:30:24:snake_opposite_direction	16	static
+../Core/Src/snake_gameplay.c:46:6:snake_plot	32	static
+../Core/Src/snake_gameplay.c:72:6:fruit_plot	24	static
+../Core/Src/snake_gameplay.c:88:6:snake_game_init	24	static
+../Core/Src/snake_gameplay.c:108:6:pacify_compiler	8	static
+../Core/Src/snake_gameplay.c:115:6:snake_heading_update	32	static
+../Core/Src/snake_gameplay.c:145:6:snake_place_fruit	40	static
+../Core/Src/snake_gameplay.c:185:7:find_next_head	24	static
+../Core/Src/snake_gameplay.c:214:6:snake_periodic_play	56	static

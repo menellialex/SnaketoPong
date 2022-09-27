@@ -1,0 +1,2 @@
+../Core/Src/snake_main.c:109:6:ram_health	16	static
+../Core/Src/snake_main.c:117:6:snake_main	224	static,ignoring_inline_asm
