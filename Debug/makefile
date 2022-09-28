@@ -60,8 +60,8 @@ all: main-build
 main-build: SnaketoPong.elf secondary-outputs
 
 # Tool invocations
-SnaketoPong.elf SnaketoPong.map: $(OBJS) $(USER_OBJS) C:\Users\admenelli19\Documents\SnaketoPong\STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "SnaketoPong.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\admenelli19\Documents\SnaketoPong\STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SnaketoPong.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+SnaketoPong.elf SnaketoPong.map: $(OBJS) $(USER_OBJS) C:\Users\boom3\Desktop\PDF\ or\ Word\ Documents\Emb\ Sys\ Lab\SnaketoPong\STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "SnaketoPong.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\boom3\Desktop\PDF or Word Documents\Emb Sys Lab\SnaketoPong\STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SnaketoPong.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
