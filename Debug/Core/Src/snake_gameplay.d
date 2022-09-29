@@ -31,8 +31,6 @@ Core/Src/snake_gameplay.o: ../Core/Src/snake_gameplay.c \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
- ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
- ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
  ../Core/Inc/snake_enums.h ../Core/Inc/smc_queue.h \
  ../Core/Inc/snake_main.h ../Core/Inc/snake_repair.h \
  ../Core/Inc/quadknob.h ../Core/Inc/snake_enums.h \
@@ -71,8 +69,6 @@ Core/Src/snake_gameplay.o: ../Core/Src/snake_gameplay.c \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h:
-../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h:
-../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h:
 ../Core/Inc/snake_enums.h:
 ../Core/Inc/smc_queue.h:
 ../Core/Inc/snake_main.h:
