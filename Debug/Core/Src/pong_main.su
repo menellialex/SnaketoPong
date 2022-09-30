@@ -1,0 +1,2 @@
+../Core/Src/pong_main.c:109:6:ram_health	16	static
+../Core/Src/pong_main.c:117:6:pong_main	224	static,ignoring_inline_asm

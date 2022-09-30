@@ -1,5 +1,5 @@
-Core/Src/snake_main.o: ../Core/Src/snake_main.c \
- ../Drivers/CMSIS/Include/cmsis_gcc.h ../Core/Inc/main.h \
+Core/Src/show_pong.o: ../Core/Src/show_pong.c ../Core/Inc/pong_enums.h \
+ ../Core/Inc/pong_gameplay.h ../Core/Inc/quadknob.h ../Core/Inc/main.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
  ../Core/Inc/stm32g0xx_hal_conf.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_rcc.h \
@@ -31,13 +31,11 @@ Core/Src/snake_main.o: ../Core/Src/snake_main.c \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
- ../Core/Inc/snake_main.h ../Core/Inc/snake_gameplay.h \
- ../Core/Inc/quadknob.h ../Core/Inc/main.h ../Core/Inc/snake_enums.h \
- ../Core/Inc/smc_queue.h ../Core/Inc/snake_main.h \
- ../Core/Inc/display_DOGS_102.h ../Core/Inc/snake_enums.h \
- ../Core/Inc/quadknob.h ../Core/Inc/smc_queue.h ../Core/Inc/show_snake.h \
- ../Core/Inc/snake_gameplay.h
-../Drivers/CMSIS/Include/cmsis_gcc.h:
+ ../Core/Inc/snake_enums.h ../Core/Inc/smc_queue.h \
+ ../Core/Inc/snake_main.h ../Core/Inc/display_DOGS_102.h
+../Core/Inc/pong_enums.h:
+../Core/Inc/pong_gameplay.h:
+../Core/Inc/quadknob.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:
 ../Core/Inc/stm32g0xx_hal_conf.h:
@@ -70,16 +68,7 @@ Core/Src/snake_main.o: ../Core/Src/snake_main.c \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h:
-../Core/Inc/snake_main.h:
-../Core/Inc/snake_gameplay.h:
-../Core/Inc/quadknob.h:
-../Core/Inc/main.h:
 ../Core/Inc/snake_enums.h:
 ../Core/Inc/smc_queue.h:
 ../Core/Inc/snake_main.h:
 ../Core/Inc/display_DOGS_102.h:
-../Core/Inc/snake_enums.h:
-../Core/Inc/quadknob.h:
-../Core/Inc/smc_queue.h:
-../Core/Inc/show_snake.h:
-../Core/Inc/snake_gameplay.h:
