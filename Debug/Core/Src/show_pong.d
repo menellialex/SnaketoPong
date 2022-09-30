@@ -31,8 +31,8 @@ Core/Src/show_pong.o: ../Core/Src/show_pong.c ../Core/Inc/pong_enums.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
- ../Core/Inc/snake_enums.h ../Core/Inc/smc_queue.h \
- ../Core/Inc/snake_main.h ../Core/Inc/display_DOGS_102.h
+ ../Core/Inc/pong_enums.h ../Core/Inc/smc_queue.h ../Core/Inc/pong_main.h \
+ ../Core/Inc/display_DOGS_102.h
 ../Core/Inc/pong_enums.h:
 ../Core/Inc/pong_gameplay.h:
 ../Core/Inc/quadknob.h:
@@ -68,7 +68,7 @@ Core/Src/show_pong.o: ../Core/Src/show_pong.c ../Core/Inc/pong_enums.h \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h:
-../Core/Inc/snake_enums.h:
+../Core/Inc/pong_enums.h:
 ../Core/Inc/smc_queue.h:
-../Core/Inc/snake_main.h:
+../Core/Inc/pong_main.h:
 ../Core/Inc/display_DOGS_102.h:

@@ -1,1 +1,2 @@
 ../Core/Src/show_pong.c:12:6:incremental_show_snake	24	static
+../Core/Src/show_pong.c:50:6:update_pong_display	24	static

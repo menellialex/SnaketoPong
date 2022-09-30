@@ -30,7 +30,7 @@ Core/Src/QuadKnob.o: ../Core/Src/QuadKnob.c ../Core/Inc/quadknob.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
- ../Core/Inc/snake_enums.h ../Core/Inc/main.h
+ ../Core/Inc/pong_enums.h ../Core/Inc/main.h
 ../Core/Inc/quadknob.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:
@@ -64,5 +64,5 @@ Core/Src/QuadKnob.o: ../Core/Src/QuadKnob.c ../Core/Inc/quadknob.h \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h:
-../Core/Inc/snake_enums.h:
+../Core/Inc/pong_enums.h:
 ../Core/Inc/main.h:
