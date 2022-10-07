@@ -1,0 +1,27 @@
+/*
+ * Keypad.h
+ *
+ */
+ 
+#ifndef INC_KEYPAD_H_
+#define INC_KEYPAD_H_
+
+#include "main.h"
+#include "stdbool.h"
+#include "pressed.h"
+
+//Enum pressed{player1_up, player1_down, player2_up, player2_down}
+
+typedef
+	struct Keypad_struct{
+		void (*update) (struct Keypad_struct *self);
+		enum Pressed (*get) (const struct Keypad_struct *self);
+}Keypad;
+
+void keypad_init(Keypad *self);
+void Keypad_update(Keypad *self);
+enum Press Keypad_get(const Keypad *self);
+
+uint4_t scan_column(uint16_t pin_var);
+
+#endif /* INC_KEYPAD_H_ */
