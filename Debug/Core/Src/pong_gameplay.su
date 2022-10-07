@@ -13,4 +13,4 @@
 ../Core/Src/pong_gameplay.c:386:6:ball_plot	16	static
 ../Core/Src/pong_gameplay.c:392:6:bars_plot	16	static
 ../Core/Src/pong_gameplay.c:405:6:check_ball_collision	16	static
-../Core/Src/pong_gameplay.c:437:6:pong_periodic_play	32	static
+../Core/Src/pong_gameplay.c:437:6:pong_periodic_play	40	static
