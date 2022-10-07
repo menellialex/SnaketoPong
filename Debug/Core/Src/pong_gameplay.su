@@ -8,9 +8,9 @@
 ../Core/Src/pong_gameplay.c:186:7:find_next_head	24	static
 ../Core/Src/pong_gameplay.c:215:6:snake_periodic_play	56	static
 ../Core/Src/pong_gameplay.c:278:6:pong_init	16	static
-../Core/Src/pong_gameplay.c:305:6:ball_state	16	static
-../Core/Src/pong_gameplay.c:324:6:bar_update	32	static
-../Core/Src/pong_gameplay.c:386:6:ball_plot	16	static
-../Core/Src/pong_gameplay.c:392:6:bars_plot	16	static
-../Core/Src/pong_gameplay.c:405:6:check_ball_collision	16	static
-../Core/Src/pong_gameplay.c:437:6:pong_periodic_play	40	static
+../Core/Src/pong_gameplay.c:306:6:ball_state	16	static
+../Core/Src/pong_gameplay.c:325:6:bar_update	32	static
+../Core/Src/pong_gameplay.c:387:6:ball_plot	16	static
+../Core/Src/pong_gameplay.c:393:6:bars_plot	16	static
+../Core/Src/pong_gameplay.c:406:6:check_ball_collision	16	static
+../Core/Src/pong_gameplay.c:438:6:pong_periodic_play	40	static
