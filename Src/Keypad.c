@@ -33,12 +33,12 @@ void keypad_init(Keypad *self) {
 	 self->update = &Keypad_update;
 	 self->get = &Keypad_get;
 	 
-	 self->button_press = empty;
+	 self->button_press = EMPTY;
  }
  
 
  void Keypad_update(Keypad *self){
-	 enum Pressed button_press = SET;
+	 enum Pressed button_press = EMPTY;
 	 uint4_t column_num;
 	 
 	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET); //Set rows high
@@ -47,24 +47,24 @@ void keypad_init(Keypad *self) {
 	 if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0) == 0){
 		 column_num = scan_column(GPIO_PIN_0);
 		 if (column_num == 1)
-			 button_input = player1_up;
+			 button_input = PLAYER1_UP;
 		 if (column_num == 2)
-			 button_input = player1_down;
+			 button_input = PLAYER1_DOWN;
 	 }
 	 else if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_1) == 0){
 		 column_num = scan_column(GPIO_PIN_0);
 		 if (column_num == 1)
-			 button_input = player2_up;
+			 button_input = PLAYER2_UP;
 		 if (column_num == 2)
-			 button_input = player2_down;
+			 button_input = PLAYER2_DOWN;
 	 }
 	 else
-		 input_player1 = empty;
+		 input_player1 = EMPTY;
 	 
-	 self->button_press = input_player1;
+	 self->button_press = button_input;
 	 
  }
  
 enum Press Keypad_get(const Keypad *self){
-	 return self->player1;
+	 return self->button_press;
  }
