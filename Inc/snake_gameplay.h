@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "quadknob.h"
-#include "snake_enums.h"
+#include "pong_enums.h"
 #include "smc_queue.h"
 #include "snake_main.h" // Get checks and display width
 

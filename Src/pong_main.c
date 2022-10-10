@@ -89,13 +89,15 @@
 #include "quadknob.h"
 #include "smc_queue.h"
 #include "show_pong.h"
+#include "Keypad.h"
+#include "circle_queue.h"
 
 ///////////////////////////
 // Test -without input, the expected output = snake goes straight ahead every 1/2 second.
 // Without_Input - Works!
 //#define TEST_WITHOUT_INPUT
 
-#define PONG_TEST;
+#define PONG_TEST
 
 // Test - with input: ... (a) Slithering is OK!
 // (b) Turning works - 1 or several detents turn correctly, reliably.
@@ -120,25 +122,14 @@ void pong_main(void){
 	const int32_t timer_isr_500ms_restart = 500;
 	const int32_t timer_isr_2000ms_restart = 2000;
 
-	/* snake game initialize
-	// INITIALIZE THE GAME
-	// Construct the model "game" object:
-	snake_game my_game;
-	volatile uint16_t ram_dummy_1 = MEMORY_BARRIER_1;
-	snake_game_init(&my_game);
-	 */
-
-	// Construct IPC
-	Smc_queue turn_q;
+	circle_queue queue;
 	volatile uint16_t ram_dummy_2 = MEMORY_BARRIER_2;
-	smc_queue_init(&turn_q);
+	circle_queue_init(&queue);
 
-	/* quad knob initialize
-	// Input object
-	QuadKnob user_knob_1;
+	// keypad init
+	struct Keypad_struct keypad_obj;
 	volatile uint16_t ram_dummy_3 = MEMORY_BARRIER_3;
-	quadknob_init(&user_knob_1);
-	*/
+	keypad_init(&keypad_obj);
 
 	//pong game init
 	pong_game pong_game;
@@ -166,10 +157,14 @@ void pong_main(void){
 	// OPERATE THE GAME
 	int32_t prior_timer_countdown = timer_isr_countdown;
 
+	//set pins for keypad high and low
+	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET); //Set rows high
+	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET); //Set columns low
+
 	while(1){
 		//ram_health(ram_dummy_1, MEMORY_BARRIER_1); dont need
 		ram_health(ram_dummy_2, MEMORY_BARRIER_2);
-		//ram_health(ram_dummy_3, MEMORY_BARRIER_3); dont need
+		ram_health(ram_dummy_3, MEMORY_BARRIER_3);
 		ram_health(ram_dummy_4, MEMORY_BARRIER_4);
 
 	// ASSERT TIMER COUNTDOWN IN RANGE
@@ -180,17 +175,32 @@ void pong_main(void){
 		}
 
 #ifdef PONG_TEST
-		//check for user input
-		/*
-		 *
-		 *insert code here for user input
-		 *
-		 */
 
-		//i think hard fault is due to prior timer not being reset lol
+		// checks every 1 ms for a input
 		if (prior_timer_countdown != timer_isr_countdown )
 		{
+			//resets counter
 			prior_timer_countdown = timer_isr_countdown;
+
+			//see if any button has been pressed
+			if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0) == 0)
+			{
+				Keypad_update(&keypad_obj);
+			}
+			else if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_1) == 0)
+			{
+				Keypad_update(&keypad_obj);
+			}
+
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET); //Set rows high
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET); //Set columns low
+
+			//store in queue
+			 enum pressed message = keypad_obj.button_press;
+			 queue.put(&queue,&message);
+
+			 bars_heading_update(&pong_game, &queue);
+
 		}
 
 		//animate every 500 ms
@@ -204,6 +214,16 @@ void pong_main(void){
 
 			//paint on screen
 			update_pong_display(&pong_game, true);
+
+			//checks if either side won
+			if (pong_game.ball_position.x <= 0 || pong_game.ball_position.x >= 8)
+			{
+				display_checkerboard();
+				while(1)
+				{
+					//freeze
+				}
+			}
 		}
 
 #endif PONG_TEST

@@ -8,6 +8,8 @@
 #ifndef INC_SNAKE_TURN_H_
 #define INC_SNAKE_TURN_H_
 
+#include "pressed.h" //includes the pressed enum
+
 enum snake_direction {CRAWL_X_PLUS, CRAWL_X_MINUS, CRAWL_Y_PLUS, CRAWL_Y_MINUS};
 enum Twist {QUADKNOB_CW, QUADKNOB_CCW, QUADKNOB_STILL};
 enum DED {DED_LOW, DED_RISING, DED_HIGH, DED_FALLING, DED_UNDEF};
