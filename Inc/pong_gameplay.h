@@ -14,6 +14,7 @@
 #include "pong_enums.h"
 #include "smc_queue.h"
 #include "pong_main.h" // Get checks and display width
+#include "circle_queue.h"
 
 typedef struct {int16_t x; int16_t y;} XY_PT;
 
@@ -59,6 +60,7 @@ void ball_plot(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
 void pong_periodic_play(pong_game*);
 void ball_state(pong_game* pg);
 void check_ball_collision(pong_game* pg);
+void bars_heading_update(pong_game* pg, circle_queue* q);
 
 #endif /* SNAKE_GAMEPLAY_H_ */
 

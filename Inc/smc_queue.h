@@ -12,7 +12,7 @@
 #include <stddef.h> // size_t
 #include <stdint.h>
 #include <stdbool.h>
-#include "snake_enums.h"
+#include "pong_enums.h"
 
 
 #define SMC_Q_BUFSIZE 10

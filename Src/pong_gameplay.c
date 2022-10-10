@@ -17,6 +17,7 @@
 #include "quadknob.h"
 #include "pong_enums.h"
 #include "display_DOGS_102.h"
+#include "circle_queue.h"
 
 #define ERROR_DISPLAY_BAD_HEADING {{1,0},{1,1},{1,2}, {1,4},{1,5},{1,6}}
 #define ERROR_DISPLAY_BLOCK_COUNT 6
@@ -285,7 +286,6 @@ void pong_init(pong_game* pg)
 	pg->left_bottom.y = 5;
 	pg->left_middle.y = 4;
 	pg->left_direction = NONE;
-	pg->left_direction = DOWN;
 
 	//initialize right bar on right side
 	pg->right_top.x = 7;
@@ -295,7 +295,6 @@ void pong_init(pong_game* pg)
 	pg->right_bottom.y = 5;
 	pg->right_middle.y = 4;
 	pg->right_direction = NONE;
-	pg->right_direction = UP;
 
 	//initialize ball
 	pg->ball_position.x = 4;
@@ -425,8 +424,8 @@ void check_ball_collision(pong_game* pg)
 		//next check if the next move will be into the left bar
 		//we wanna make sure it goes into the bar on the next frame
 		//since thats the point it will be going into
-		int8_t next_position_up = pg->ball_position.y++;
-		int8_t next_position_down = pg->ball_position.y--;
+		int8_t next_position_up = pg->ball_position.y--;
+		int8_t next_position_down = pg->ball_position.y++;
 		if (next_position_down == pg->left_top.y || next_position_up == pg->left_top.y)
 		{
 			ball_state(pg);
@@ -442,8 +441,8 @@ void check_ball_collision(pong_game* pg)
 	}
 	else if(pg->ball_position.x == 6)
 	{
-		int8_t next_position_up = pg->ball_position.y++;
-		int8_t next_position_down = pg->ball_position.y--;
+		int8_t next_position_up = pg->ball_position.y--;
+		int8_t next_position_down = pg->ball_position.y++;
 		if (next_position_down == pg->right_top.y || next_position_up == pg->right_top.y)
 		{
 			ball_state(pg);
@@ -474,16 +473,8 @@ void pong_periodic_play(pong_game* pg)
 
 	//we wanna make sure if the plotting was a success
 	//the bar will be moved by pong_plot. The ball will not.
-	bool success = true;
 	bar_update(pg, board);
 	check_ball_collision(pg);
-
-	//dont actually want to create a function for what happens if it breaks so
-	//im just gonna freeze the game
-	if (success != true)
-	{
-		while(1);
-	}
 
 	//next, move the ball based on it's direction
 	//bar_update updates the bar on its own so yeah
@@ -507,6 +498,34 @@ void pong_periodic_play(pong_game* pg)
 			break;
 	}
 
+}
+
+
+void bars_heading_update(pong_game* pg, circle_queue* q)
+{
+	//get the updated heading out
+	enum pressed update;
+	bool data_avail = q->get(q, &update);
+
+	//wanna check if theirs data in the q
+	if (data_avail == true)
+	{
+		switch(update)
+		{
+		case(PLAYER1_UP):
+				pg->left_direction = UP;
+				break;
+		case(PLAYER1_DOWN):
+				pg->left_direction = DOWN;
+				break;
+		case(PLAYER2_UP):
+				pg->right_direction = UP;
+				break;
+		case(PLAYER2_DOWN):
+				pg->right_direction = DOWN;
+				break;
+		}
+	}
 }
 
 
