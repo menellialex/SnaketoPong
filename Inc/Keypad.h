@@ -21,7 +21,7 @@ typedef struct Keypad_struct
 
 void keypad_init(Keypad *self);
 void Keypad_update(Keypad *self);
-enum Press Keypad_get(const Keypad *self);
+enum pressed Keypad_get(const Keypad *self);
 
 uint8_t scan_column(uint16_t pin_var);
 
