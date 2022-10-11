@@ -5,7 +5,6 @@
  
  #include <keypad.h>
  #include "main.h"
- #include "pressed.h"
  
  
 // enum for reference  player1_up, player1_down, player2_up, player2_down, empty
@@ -30,13 +29,13 @@ uint8_t scan_column(uint16_t pin_var){ //function to determine which column is b
 
  
 void keypad_init(Keypad *self) {
-	 self->update = &Keypad_update;
-	 
+	 self->update = &keypad_update;
+	 self->get = &Keypad_get;
 	 self->button_press = EMPTY;
  }
  
 
- void Keypad_update(Keypad *self)
+ void keypad_update(Keypad *self)
  {
 	 enum pressed button_input;
 	 uint8_t column_num;
@@ -61,4 +60,8 @@ void keypad_init(Keypad *self) {
 	 self->button_press = button_input;
 	 
  }
+
+enum pressed Keypad_get(const Keypad *self){
+		return self->button_press;
+}
 
