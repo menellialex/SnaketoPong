@@ -40,6 +40,10 @@ void keypad_init(Keypad *self) {
 	 enum pressed button_input;
 	 uint8_t column_num;
 	 
+	 //initialize GPIO 
+	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET); //rows to 1
+	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET); //columns to 0
+	 
 	 if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0) == 0){
 		 column_num = scan_column(GPIO_PIN_0); 
 		 if (column_num == 1) //if top row and the left column is pressed
