@@ -13,6 +13,7 @@ PB6 -> GPIO_OUTPUT
 TIM17
 Activated
 TIM17 global interrup -> Enabled
+Timer Count -> 1000
 
 SPI2
 Activated
