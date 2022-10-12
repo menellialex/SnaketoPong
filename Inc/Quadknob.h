@@ -12,7 +12,7 @@
 
 #include "main.h"
 #include "stdbool.h"
-#include "snake_enums.h"
+#include "pong_enums.h"
 
 
 // "Class" DebouncedEdgeDetector///////////////////////////////////////////////

@@ -13,7 +13,8 @@
 #include "quadknob.h"
 #include "pong_enums.h"
 #include "smc_queue.h"
-#include "snake_main.h" // Get checks and display width
+#include "pong_main.h" // Get checks and display width
+#include "circle_queue.h"
 
 typedef struct {int16_t x; int16_t y;} XY_PT;
 
@@ -33,6 +34,33 @@ void snake_periodic_play(snake_game *snake);
 void snake_place_fruit(snake_game * s, const int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
 bool snake_plot(const snake_game *s, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
 bool fruit_plot(const snake_game *s, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
+
+
+// start pong variables
+typedef struct
+{
+	XY_PT left_top;
+	XY_PT left_middle;
+	XY_PT left_bottom;
+	enum bar_direction left_direction;
+
+	XY_PT right_top;
+	XY_PT right_middle;
+	XY_PT right_bottom;
+	enum bar_direction right_direction;
+
+	XY_PT ball_position;
+	enum ball_direction ball_direction;
+} pong_game;
+
+//start pong gameplay functions
+void pong_init(pong_game* pg);
+void pong_plot(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
+void ball_plot(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
+void pong_periodic_play(pong_game*);
+void ball_state(pong_game* pg);
+void check_ball_collision(pong_game* pg);
+void bars_heading_update(pong_game* pg, circle_queue* q);
 
 #endif /* SNAKE_GAMEPLAY_H_ */
 

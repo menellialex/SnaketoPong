@@ -96,7 +96,8 @@ void display_init(void){
 	const int init_stream_length = sizeof(init_stream)/ sizeof(init_stream[0]);
 	// - LET CUBEMX CONFIGURE REGISTERS // config_periph();
 	// Hardware reset first:
-	HAL_GPIO_WritePin(DOGS_reset_GPIO_Port, DOGS_reset_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+
 	// Or use the bit-banging method to do the same thing:
 	GPIOA->ODR &=~ GPIO_ODR_OD0; // nReset Low
 
