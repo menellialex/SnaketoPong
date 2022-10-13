@@ -81,6 +81,7 @@
 #include <stdlib.h> // rand
 #include <stdbool.h>
 #include <cmsis_gcc.h>
+#include <keypad.h>
 #include "main.h"
 #include "pong_main.h"
 #include "pong_gameplay.h"
@@ -89,7 +90,6 @@
 #include "quadknob.h"
 #include "smc_queue.h"
 #include "show_pong.h"
-#include "Keypad.h"
 #include "circle_queue.h"
 
 ///////////////////////////
@@ -157,9 +157,6 @@ void pong_main(void){
 	// OPERATE THE GAME
 	int32_t prior_timer_countdown = timer_isr_countdown;
 
-	//set pins for keypad high and low
-	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET); //Set rows high
-	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET); //Set columns low
 
 	while(1){
 		//ram_health(ram_dummy_1, MEMORY_BARRIER_1); dont need
@@ -182,24 +179,27 @@ void pong_main(void){
 			//resets counter
 			prior_timer_countdown = timer_isr_countdown;
 
-			//see if any button has been pressed
-			if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0) == 0)
+			GPIOB->PUPDR |= (0x55);// PB0-3 pullup
+			GPIOB->MODER |= (0x5); // PB0 and PB1 output
+			GPIOB->ODR &= ~(0x3); // PB 0 and PB1 low
+			if((GPIOB->IDR & (1<<2)) ==0) //check if any button is pressed
 			{
-				Keypad_update(&keypad_obj);
+				//reset Mode
+				GPIOB->MODER &= ~(0x5);
+				keypad_update(&keypad_obj); //call function
 			}
-			else if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_1) == 0)
+			if((GPIOB->IDR & (1<<3)) ==0) //check if any button is pressed
 			{
-				Keypad_update(&keypad_obj);
+				//reset Mode
+				GPIOB->MODER &= ~(0x5);
+				keypad_update(&keypad_obj); //call function
 			}
-
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET); //Set rows high
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET); //Set columns low
 
 			//store in queue
-			 enum pressed message = keypad_obj.button_press;
-			 queue.put(&queue,&message);
+			enum pressed message = keypad_obj.button_press;
+			queue.put(&queue,&message);
 
-			 bars_heading_update(&pong_game, &queue);
+			bars_heading_update(&pong_game, &queue);
 
 		}
 
