@@ -23,6 +23,5 @@ void keypad_init(Keypad *self);
 void keypad_update(Keypad *self);
 enum pressed Keypad_get(const Keypad *self);
 
-//uint8_t scan_column(uint16_t pin_var);
 
 #endif /* INC_KEYPAD_H_ */
