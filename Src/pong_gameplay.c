@@ -300,6 +300,8 @@ void pong_init(pong_game* pg)
 	pg->ball_position.x = 4;
 	pg->ball_position.y = 4;
 	pg->ball_direction = NORTHEAST; //heads towards the right side
+	pg->ball_reverse = false;
+
 }
 
 //switches the ball state based on where it was heading.
@@ -383,6 +385,10 @@ bool bar_update(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE])
 		bool success = true;
 	}
 
+	//updates the bar heading so that one press moves it one spot
+	pg->left_direction = NONE;
+	pg->right_direction = NONE;
+
 	return success;
 }
 
@@ -429,14 +435,26 @@ void check_ball_collision(pong_game* pg)
 		if (next_position_down == pg->left_top.y || next_position_up == pg->left_top.y)
 		{
 			ball_state(pg);
+			if (pg->ball_direction == SOUTHWEST)
+			{
+				pg->ball_direction = SOUTHEAST;
+			}
 		}
 		else if (next_position_down == pg->left_bottom.y || next_position_up == pg->left_bottom.y)
 		{
 			ball_state(pg);
+			if (pg->ball_direction == SOUTHWEST)
+			{
+				pg->ball_direction = SOUTHEAST;
+			}
 		}
 		else if (next_position_down == pg->left_middle.y || next_position_up == pg->left_middle.y)
 		{
 			ball_state(pg);
+			if (pg->ball_direction == SOUTHWEST)
+			{
+				pg->ball_direction = SOUTHEAST;
+			}
 		}
 	}
 	else if(pg->ball_position.x == 6)
@@ -446,14 +464,26 @@ void check_ball_collision(pong_game* pg)
 		if (next_position_down == pg->right_top.y || next_position_up == pg->right_top.y)
 		{
 			ball_state(pg);
+			if (pg->ball_direction == SOUTHEAST)
+			{
+				pg->ball_direction = NORTHWEST;
+			}
 		}
 		else if (next_position_down == pg->right_bottom.y || next_position_up == pg->right_bottom.y)
 		{
 			ball_state(pg);
+			if (pg->ball_direction == SOUTHEAST)
+			{
+				pg->ball_direction = NORTHWEST;
+			}
 		}
 		else if (next_position_down == pg->right_middle.y || next_position_up == pg->right_middle.y)
 		{
 			ball_state(pg);
+			if (pg->ball_direction == SOUTHEAST)
+			{
+				pg->ball_direction = NORTHWEST;
+			}
 		}
 	}
 
@@ -478,6 +508,7 @@ void pong_periodic_play(pong_game* pg)
 
 	//next, move the ball based on it's direction
 	//bar_update updates the bar on its own so yeah
+	//also if revesed yeah. kinda gro
 	switch (pg->ball_direction)
 	{
 	case(NORTHWEST):
@@ -497,6 +528,7 @@ void pong_periodic_play(pong_game* pg)
 			pg->ball_position.y--;
 			break;
 	}
+
 
 }
 

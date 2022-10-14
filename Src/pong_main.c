@@ -187,17 +187,21 @@ void pong_main(void){
 				//reset Mode
 				GPIOB->MODER &= ~(0x5);
 				keypad_update(&keypad_obj); //call function
+
+				//store in queue
+				enum pressed message = keypad_obj.button_press;
+				queue.put(&queue,&message);
 			}
 			if((GPIOB->IDR & (1<<3)) ==0) //check if any button is pressed
 			{
 				//reset Mode
 				GPIOB->MODER &= ~(0x5);
 				keypad_update(&keypad_obj); //call function
-			}
 
-			//store in queue
-			enum pressed message = keypad_obj.button_press;
-			queue.put(&queue,&message);
+				//store in queue
+				enum pressed message = keypad_obj.button_press;
+				queue.put(&queue,&message);
+			}
 
 			bars_heading_update(&pong_game, &queue);
 
@@ -215,8 +219,11 @@ void pong_main(void){
 			//paint on screen
 			update_pong_display(&pong_game, true);
 
+			//makes pad not move maybe?
+			keypad_obj.button_press = NONE;
+
 			//checks if either side won
-			if (pong_game.ball_position.x <= 0 || pong_game.ball_position.x >= 8)
+			if (pong_game.ball_position.x < 0 || pong_game.ball_position.x > 8)
 			{
 				display_checkerboard();
 				while(1)

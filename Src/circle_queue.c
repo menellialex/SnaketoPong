@@ -38,6 +38,7 @@ bool circle_queue_get(circle_queue *q, enum pressed *msg) {
     bool success = false;
     if(q->head == -1) {
         printf("Queue is empty\n");
+        *msg = NONE;
         return success;
     }else{
         *msg = q->buffer[q->head];

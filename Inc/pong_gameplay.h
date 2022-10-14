@@ -51,6 +51,7 @@ typedef struct
 
 	XY_PT ball_position;
 	enum ball_direction ball_direction;
+	bool ball_reverse;
 } pong_game;
 
 //start pong gameplay functions

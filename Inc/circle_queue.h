@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <pressed.h>
 #include <stdio.h>
+#include "pong_enums.h"
 
 #define CIRCLE_Q_BUFSIZE 10
 
