@@ -14,7 +14,7 @@ All pull-up resisters are coded in.
 TIM17
 Activated
 TIM17 global interrup -> Enabled
-Timer Count -> 1000
+Timer Count -> 32000
 
 SPI2
 Activated
