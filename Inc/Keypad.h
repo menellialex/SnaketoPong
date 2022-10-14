@@ -10,19 +10,18 @@
 #include "stdbool.h"
 #include "pressed.h"
 
-//Enum pressed{player1_up, player1_down, player2_up, player2_down}
+//Enum info for reference pressed{player1_up, player1_down, player2_up, player2_down, empty}
 
 typedef struct Keypad_struct
 {
 		void (*update) (struct Keypad_struct *self);
-		enum Pressed (*get) (const struct Keypad_struct *self);
+		enum pressed (*get) (const struct Keypad_struct *self);
 		enum pressed button_press;
 }Keypad;
 
 void keypad_init(Keypad *self);
-void Keypad_update(Keypad *self);
-enum Press Keypad_get(const Keypad *self);
+void keypad_update(Keypad *self);
+enum pressed Keypad_get(const Keypad *self);
 
-uint8_t scan_column(uint16_t pin_var);
 
 #endif /* INC_KEYPAD_H_ */

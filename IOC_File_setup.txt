@@ -5,14 +5,16 @@ PA0 -> GPIO_OUTPUT
 PA1 -> GPIO_OUTPUT
 PD9 -> GPIO_OUTPUT
 
-PB0 -> GPIO_OUTPUT
-PB1 -> GPIO_OUTPUT
-PB5 -> GPIO_OUTPUT
-PB6 -> GPIO_OUTPUT
+PB0 -> GPIO_INPUT
+PB1 -> GPIO_INPUT
+PB2 -> GPIO_INPUT
+PB3 -> GPIO_INPUT
+All pull-up resisters are coded in.
 
 TIM17
 Activated
 TIM17 global interrup -> Enabled
+Timer Count -> 32000
 
 SPI2
 Activated
