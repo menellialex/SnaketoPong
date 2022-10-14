@@ -9,6 +9,7 @@ PB0 -> GPIO_INPUT
 PB1 -> GPIO_INPUT
 PB2 -> GPIO_INPUT
 PB3 -> GPIO_INPUT
+All pull-up resisters are coded in.
 
 TIM17
 Activated
