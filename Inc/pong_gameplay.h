@@ -56,9 +56,9 @@ typedef struct
 
 //start pong gameplay functions
 void pong_init(pong_game* pg);
-void pong_plot(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
+void bars_plot(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
 void ball_plot(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE]);
-void pong_periodic_play(pong_game*);
+void pong_periodic_play(pong_game* pg);
 void ball_state(pong_game* pg);
 void check_ball_collision(pong_game* pg);
 void bars_heading_update(pong_game* pg, circle_queue* q);

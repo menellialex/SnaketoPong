@@ -11,16 +11,19 @@
 
 typedef struct circle_queue_struct {
     // ATTRIBUTES
-    int size;
+    uint8_t size;
+    //JPL violation. We need negative numbers for the tail and the head.
     int tail;
     int head;
     enum pressed buffer[CIRCLE_Q_BUFSIZE];
 
     // METHODS
+    //must be able to put things into a queue using a function
     bool (*put)(struct circle_queue_struct *q, const enum pressed *msg);
     //bool (*peek)(const struct circle_queue_struct *q, enum pressed *msg);
+    //must be able get a message out of the struct.
     bool (*get)(struct circle_queue_struct *q,  enum pressed *msg);
-    bool (*display)(struct circle_queue_struct *q);
+    //bool (*display)(struct circle_queue_struct *q);
 } circle_queue;
 
 circle_queue* circle_queue_init( circle_queue* Q);

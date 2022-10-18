@@ -9,22 +9,32 @@ circle_queue* circle_queue_init(circle_queue *q) {
     q->put = &(circle_queue_put);
     q->get = &(circle_queue_get);
     //q->peek = &(circle_queue_peek);
-    q->display = &(circle_queue_display);
+    //q->display = &(circle_queue_display);
     return q;
 }
 
+//JPL violation 29. We must be able to put messages into the queue.
 bool circle_queue_put(circle_queue *q, const enum pressed *msg) {
     bool success = false;
     if ((q->head == q->tail + 1) || (q->head == 0 && q->tail == q->size - 1)) {
         printf("Queue is full\n");
         return success;
-    }else{
-        if(q->head == -1) {
-            q->head = 0;
-        }
-        q->tail = (q->tail + 1) % q->size;
-        q->buffer[q->tail] = *msg;
-        success = true;
+    }else
+    {
+    	if (*msg == PLAYER1_UP || *msg == PLAYER1_DOWN || *msg == PLAYER2_UP || *msg == PLAYER2_DOWN || *msg == EMPTY)
+    	{
+			if(q->head == -1)
+			{
+				q->head = 0;
+			}
+			q->tail = (q->tail + 1) % q->size;
+			q->buffer[q->tail] = *msg;
+			success = true;
+    	}
+    	else
+    	{
+    		success == false;
+    	}
     }
     return success;
 }
@@ -34,11 +44,12 @@ bool circle_queue_put(circle_queue *q, const enum pressed *msg) {
 //    return success;
 //}
 
+//JPL code clarity violation 29, we must be able to get messages from the queue.
 bool circle_queue_get(circle_queue *q, enum pressed *msg) {
     bool success = false;
     if(q->head == -1) {
         printf("Queue is empty\n");
-        *msg = NONE;
+        *msg = EMPTY;
         return success;
     }else{
         *msg = q->buffer[q->head];
@@ -54,7 +65,7 @@ bool circle_queue_get(circle_queue *q, enum pressed *msg) {
         }else if(q->buffer[q->head] == EMPTY) {
             printf("EMPTY\n");
         }else{
-            printf("ERROR\n");
+            success = false;
         }
         if(q->head == q->tail) {
             q->head = -1;
@@ -70,6 +81,9 @@ bool circle_queue_get(circle_queue *q, enum pressed *msg) {
     return success;
 }
 
+//display only used for testing
+//ask nick for details
+/*
 bool circle_queue_display(struct circle_queue_struct *q) {
     bool success = false;
     if(q->head == -1) {
@@ -113,3 +127,4 @@ bool circle_queue_display(struct circle_queue_struct *q) {
     }
     return success;
 }
+*/
