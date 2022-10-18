@@ -8,9 +8,6 @@
  
  
 // enum for reference  player1_up, player1_down, player2_up, player2_down, empty
- 
-
-
 
  
 void keypad_init(Keypad *self) {
@@ -19,7 +16,7 @@ void keypad_init(Keypad *self) {
 	 self->button_press = EMPTY;
  }
  
-
+//JPL code clarity violation 29, we must be able to update the button press to put into the queue.
  void keypad_update(Keypad *self)
  {
 	 enum pressed button_input;
@@ -50,7 +47,8 @@ void keypad_init(Keypad *self) {
 	 
  }
 
-enum pressed Keypad_get(const Keypad *self){
+enum pressed Keypad_get(const Keypad *self)
+{
 		return self->button_press;
 }
 

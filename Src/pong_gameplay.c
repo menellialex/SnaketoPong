@@ -300,6 +300,8 @@ void pong_init(pong_game* pg)
 	pg->ball_position.x = 4;
 	pg->ball_position.y = 4;
 	pg->ball_direction = NORTHEAST; //heads towards the right side
+	pg->ball_reverse = false;
+
 }
 
 //switches the ball state based on where it was heading.
@@ -326,7 +328,7 @@ void ball_state(pong_game* pg)
 //it will check left and right bar updates for the code.
 //THIS CODE IS NOT SUPPOSED TO PLOT THE GAME ON THE DISPLAY
 //Does actually move the bar. Does not worry about the board.
-bool bar_update(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE])
+bool bar_update(pong_game* pg)
 {
 	//we wanna make sure nothing broke so we check using a bool
 	//variable called success.
@@ -340,20 +342,20 @@ bool bar_update(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE])
 		pg->left_top.y--;
 		pg->left_middle.y--;
 		pg->left_bottom.y--;
-		bool left_success = true;
+		left_success = true;
 	}
 	else if (pg->left_bottom.y != 7 && pg->left_direction == DOWN)
 	{
 		pg->left_bottom.y++;
 		pg->left_middle.y++;
 		pg->left_top.y++;
-		bool left_success = true;
+		left_success = true;
 	}
 	else
-		{
+	{
 		//we still want to raise left_success into true if the top or bottom is hit.
 		//even though it does not move at all
-		bool left_success = true;
+		left_success = true;
 	}
 
 	//do the same if and if else statement for the right bars
@@ -362,26 +364,30 @@ bool bar_update(pong_game* pg, int8_t b[CHECKS_WIDE][CHECKS_WIDE])
 		pg->right_top.y--;
 		pg->right_middle.y--;
 		pg->right_bottom.y--;
-		bool right_success = true;
+		right_success = true;
 	}
 	else if (pg->right_bottom.y != 7 && pg->right_direction == DOWN)
 	{
 		pg->right_bottom.y++;
 		pg->right_middle.y++;
 		pg->right_top.y++;
-		bool right_success = true;
+		right_success = true;
 	}
 	else
 	{
 		//we still want to raise right_success into true if the top or bottom is hit.
 		//even though it does not move at all
-		bool right_success = true;
+		right_success = true;
 	}
 
 	if (right_success == true && left_success == true)
 	{
-		bool success = true;
+		success = true;
 	}
+
+	//updates the bar heading so that one press moves it one spot
+	pg->left_direction = NONE;
+	pg->right_direction = NONE;
 
 	return success;
 }
@@ -414,6 +420,13 @@ void check_ball_collision(pong_game* pg)
 	//ceiling or bottom, or if it hit the either bar
 	//first checks top or bottom
 	//quite possibly one of the grossest if statement i've ever made.
+
+	//next check if the next move will be into the left bar
+	//we wanna make sure it goes into the bar on the next frame
+	//since thats the point it will be going into
+	int8_t next_position_up = pg->ball_position.y - 1;
+	int8_t next_position_down = pg->ball_position.y + 1;
+
 	if (pg->ball_position.y == 0 || pg->ball_position.y == 7) //if ball hits ceiling or bottom, change directions
 	{
 		ball_state(pg);
@@ -421,39 +434,62 @@ void check_ball_collision(pong_game* pg)
 	//next check if ball is in position to hit either bar
 	else if(pg->ball_position.x == 1)
 	{
-		//next check if the next move will be into the left bar
-		//we wanna make sure it goes into the bar on the next frame
-		//since thats the point it will be going into
-		int8_t next_position_up = pg->ball_position.y--;
-		int8_t next_position_down = pg->ball_position.y++;
 		if (next_position_down == pg->left_top.y || next_position_up == pg->left_top.y)
 		{
 			ball_state(pg);
+			//ball will phase into paddle going southwest lol
+			if (pg->ball_direction == SOUTHWEST)
+			{
+				pg->ball_direction = SOUTHEAST;
+			}
 		}
 		else if (next_position_down == pg->left_bottom.y || next_position_up == pg->left_bottom.y)
 		{
 			ball_state(pg);
+			//ball will phase into paddle going southwest lol
+			if (pg->ball_direction == SOUTHWEST)
+			{
+				pg->ball_direction = SOUTHEAST;
+			}
 		}
 		else if (next_position_down == pg->left_middle.y || next_position_up == pg->left_middle.y)
 		{
 			ball_state(pg);
+			//ball will phase into paddle going southwest lol
+			if (pg->ball_direction == SOUTHWEST)
+			{
+				pg->ball_direction = SOUTHEAST;
+			}
 		}
 	}
 	else if(pg->ball_position.x == 6)
 	{
-		int8_t next_position_up = pg->ball_position.y--;
-		int8_t next_position_down = pg->ball_position.y++;
 		if (next_position_down == pg->right_top.y || next_position_up == pg->right_top.y)
 		{
 			ball_state(pg);
+			//ball will phase into paddle going northeast lol
+			if (pg->ball_direction == NORTHEAST)
+			{
+				pg->ball_direction = NORTHWEST;
+			}
 		}
 		else if (next_position_down == pg->right_bottom.y || next_position_up == pg->right_bottom.y)
 		{
 			ball_state(pg);
+			//ball will phase into paddle going northeast lol
+			if (pg->ball_direction == NORTHEAST)
+			{
+				pg->ball_direction = NORTHWEST;
+			}
 		}
 		else if (next_position_down == pg->right_middle.y || next_position_up == pg->right_middle.y)
 		{
 			ball_state(pg);
+			//ball will phase into paddle going northeast lol
+			if (pg->ball_direction == NORTHEAST)
+			{
+				pg->ball_direction = NORTHWEST;
+			}
 		}
 	}
 
@@ -461,42 +497,45 @@ void check_ball_collision(pong_game* pg)
 
 void pong_periodic_play(pong_game* pg)
 {
-	//create a board for the functions to plot the points
-	static int8_t board[CHECKS_WIDE][CHECKS_WIDE];
-
-	//fill board with zeroes
-	for (int x = 0; x < CHECKS_WIDE; x++){
-		for (int y = 0; y < CHECKS_WIDE; y++){
-			board[x][y] = 0;
-		}
-	}
+	//bool to check if bar_update is correct
+	bool bar_update_good;
 
 	//we wanna make sure if the plotting was a success
 	//the bar will be moved by pong_plot. The ball will not.
-	bar_update(pg, board);
+	bar_update_good = bar_update(pg);
 	check_ball_collision(pg);
 
-	//next, move the ball based on it's direction
-	//bar_update updates the bar on its own so yeah
-	switch (pg->ball_direction)
+	//check if bar_update went well
+	if (bar_update_good == true)
 	{
-	case(NORTHWEST):
-			pg->ball_position.x--;
-			pg->ball_position.y--;
-			break;
-	case(SOUTHWEST):
-			pg->ball_position.x--;
-			pg->ball_position.y++;
-			break;
-	case(SOUTHEAST):
-			pg->ball_position.x++;
-			pg->ball_position.y++;
-			break;
-	case(NORTHEAST):
-			pg->ball_position.x++;
-			pg->ball_position.y--;
-			break;
+		//next, move the ball based on it's direction
+		//bar_update updates the bar on its own so yeah
+		switch (pg->ball_direction)
+		{
+		case(NORTHWEST):
+				pg->ball_position.x--;
+				pg->ball_position.y--;
+				break;
+		case(SOUTHWEST):
+				pg->ball_position.x--;
+				pg->ball_position.y++;
+				break;
+		case(SOUTHEAST):
+				pg->ball_position.x++;
+				pg->ball_position.y++;
+				break;
+		case(NORTHEAST):
+				pg->ball_position.x++;
+				pg->ball_position.y--;
+				break;
+		}
 	}
+	else
+	{
+		//if it did not go good. freeze i guess?
+		while(1);
+	}
+
 
 }
 

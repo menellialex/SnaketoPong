@@ -179,6 +179,7 @@ void pong_main(void){
 			//resets counter
 			prior_timer_countdown = timer_isr_countdown;
 
+
 			GPIOB->PUPDR |= (0x55);// PB0-3 pullup
 			GPIOB->MODER |= (0x5); // PB0 and PB1 output
 			GPIOB->ODR &= ~(0x3); // PB 0 and PB1 low
@@ -187,20 +188,53 @@ void pong_main(void){
 				//reset Mode
 				GPIOB->MODER &= ~(0x5);
 				keypad_update(&keypad_obj); //call function
+
+				if (keypad_obj.button_press != EMPTY && keypad_obj.button_press != PLAYER1_UP &&
+						keypad_obj.button_press != PLAYER2_DOWN && keypad_obj.button_press != PLAYER2_UP &&
+						keypad_obj.button_press != PLAYER1_DOWN)
+				{
+					while(1);
+				}
+
+				//store in queue
+				enum pressed message = keypad_obj.button_press;
+				//checks if the queue.put went well, if not freeze
+				if (queue.put(&queue,&message) != true)
+				{
+						while(1);
+				}
 			}
 			if((GPIOB->IDR & (1<<3)) ==0) //check if any button is pressed
 			{
 				//reset Mode
 				GPIOB->MODER &= ~(0x5);
 				keypad_update(&keypad_obj); //call function
+
+				//store in queue
+				enum pressed message = keypad_obj.button_press;
+
+				//assert keypad button press
+				if (keypad_obj.button_press != EMPTY && keypad_obj.button_press != PLAYER1_UP &&
+						keypad_obj.button_press != PLAYER2_DOWN && keypad_obj.button_press != PLAYER2_UP &&
+						keypad_obj.button_press != PLAYER1_DOWN)
+				{
+					while(1);
+				}
+
+				if (queue.put(&queue,&message) != true)
+				{
+						while(1);
+				}
 			}
 
-			//store in queue
-			enum pressed message = keypad_obj.button_press;
-			queue.put(&queue,&message);
+			//assert that the direction of the left bar is okay
+			if (pong_game.left_direction != NONE && pong_game.left_direction != UP && pong_game.left_direction != DOWN)
+			{
+				//freeze
+				while(1);
+			}
 
 			bars_heading_update(&pong_game, &queue);
-
 		}
 
 		//animate every 500 ms
@@ -209,14 +243,26 @@ void pong_main(void){
 			//restart timer
 			timer_isr_countdown = timer_isr_500ms_restart;
 
+			//assert that the direction of right bar is okay
+			if (pong_game.right_direction != NONE && pong_game.right_direction != UP && pong_game.right_direction != DOWN)
+			{
+				//freeze
+				while(1);
+			}
+
+
 			//move ball and bar one frame
 			pong_periodic_play(&pong_game);
 
 			//paint on screen
 			update_pong_display(&pong_game, true);
 
+			//makes pad not move maybe?
+			keypad_obj.button_press = EMPTY;
+
+
 			//checks if either side won
-			if (pong_game.ball_position.x <= 0 || pong_game.ball_position.x >= 8)
+			if (pong_game.ball_position.x < 0 || pong_game.ball_position.x > 8)
 			{
 				display_checkerboard();
 				while(1)
